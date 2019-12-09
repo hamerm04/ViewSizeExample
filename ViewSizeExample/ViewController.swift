@@ -15,7 +15,13 @@ class ViewController: UIViewController {
     @IBOutlet weak var screenPercentageLabel: UILabel!
     @IBOutlet weak var pointWidthLabel: UILabel!
     private let screenSize = UIScreen.main.bounds
-        
+    
+    var isLandscape: Bool {
+        return UIDevice.current.orientation.isValidInterfaceOrientation
+            ? UIDevice.current.orientation.isLandscape
+            : UIApplication.shared.statusBarOrientation.isLandscape
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         updateSizeType()
@@ -62,7 +68,7 @@ class ViewController: UIViewController {
     }
     
     private func updateScreenCoveragePercentage(width: CGFloat) {
-        let screenWidth = UIDevice.current.orientation.isLandscape ? screenSize.height : screenSize.width
+        let screenWidth = isLandscape ? screenSize.height : screenSize.width
         let percentage = (width / screenWidth) * 100
         screenPercentageLabel.text = "Screen cover: \(Int(percentage))%"
     }
